@@ -15,6 +15,8 @@ header h1{margin:0 0 18px}
 .quiz{background:rgba(255,255,255,0.03);padding:20px;border-radius:10px}
 .question-text{font-size:1.1rem;margin:12px 0 18px}
 .choices{display:flex;flex-direction:column;gap:10px}
+
+.choices-count{font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:6px}
 .choice{background:#071426;color:var(--text);border:1px solid rgba(255,255,255,0.05);padding:12px;border-radius:10px;text-align:left;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease}
 .choice:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
 .choice.correct{background:linear-gradient(90deg,#064e3b,#10b981);border-color:rgba(16,185,129,0.8)}

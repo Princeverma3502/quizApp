@@ -65,7 +65,8 @@ export default function Quiz({ questions, onFinish }) {
       </div>
       <div className="question-text">{q.text}</div>
 
-      <div className="choices">
+      <div className="choices" role="list" aria-label={`Choices (${q.choices.length})`}>
+        <div className="choices-count">Choices: {q.choices.length}</div>
         {q.choices.map((c, i) => {
           const isSelected = selected === i
           const isCorrect = q.correctIndex === i
@@ -76,18 +77,20 @@ export default function Quiz({ questions, onFinish }) {
             else className += ' disabled'
           }
           return (
-            <button
-              key={i}
-              className={className}
-              onClick={() => choose(i)}
-              onKeyDown={(e)=>onKeyChoice(e,i)}
-              aria-pressed={isSelected}
-              role="button"
-              tabIndex={0}
-              ref={(el)=>{ choiceRefs.current[i]=el }}
-            >
-              {c}
-            </button>
+            <div role="listitem" key={i}>
+              <button
+                className={className}
+                onClick={() => choose(i)}
+                onKeyDown={(e)=>onKeyChoice(e,i)}
+                aria-pressed={isSelected}
+                role="button"
+                tabIndex={0}
+                aria-label={`${c} — choice ${i + 1} of ${q.choices.length}`}
+                ref={(el)=>{ choiceRefs.current[i]=el }}
+              >
+                {c}
+              </button>
+            </div>
           )
         })}
       </div>
