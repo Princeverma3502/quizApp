@@ -29,6 +29,13 @@ header h1{margin:0 0 18px}
 .choice.wrong{background:linear-gradient(90deg,#5b0000,#ef4444);border-color:rgba(220,38,38,0.8)}
 .choice.disabled{opacity:0.7}
 
+/* Wrong choice attention */
+.choice.wrong{animation:shake .38s cubic-bezier(.36,.07,.19,.97) both}
+@keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+
+/* Slight glow for correct answer */
+.choice.correct{box-shadow:0 6px 18px rgba(16,185,129,0.12)}
+
 /* Progress bar */
 .progress{height:8px;background:rgba(255,255,255,0.04);border-radius:999px;overflow:hidden;margin-bottom:12px}
 .progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),#7dd3fc);width:0%;transition:width .4s ease}
