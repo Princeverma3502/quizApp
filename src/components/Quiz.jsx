@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import confetti from 'canvas-confetti'
 
 export default function Quiz({ questions, onFinish }) {
@@ -9,6 +9,7 @@ export default function Quiz({ questions, onFinish }) {
   const scoreRef = useRef(0)
 
   const q = questions[index]
+  const choiceRefs = useRef([])
 
   function choose(i) {
     if (showFeedback) return // prevent changing answer after selection
@@ -46,6 +47,14 @@ export default function Quiz({ questions, onFinish }) {
     }
   }
 
+  useEffect(() => {
+    // When a new question loads, focus the first choice so keyboard users can answer immediately.
+    if (!showFeedback) {
+      const el = choiceRefs.current[0]
+      if (el && typeof el.focus === 'function') el.focus()
+    }
+  }, [index, showFeedback])
+
   return (
     <main className="quiz">
       <div className="question-header">
@@ -75,6 +84,7 @@ export default function Quiz({ questions, onFinish }) {
               aria-pressed={isSelected}
               role="button"
               tabIndex={0}
+              ref={(el)=>{ choiceRefs.current[i]=el }}
             >
               {c}
             </button>
