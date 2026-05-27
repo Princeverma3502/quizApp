@@ -65,6 +65,20 @@ export default function Quiz({ questions, onFinish }) {
       </div>
       <div className="question-text">{q.text}</div>
 
+      {showFeedback && (
+        <div className={`feedback ${selected === q.correctIndex ? 'success' : 'failure'}`} role="status" aria-live="polite">
+          {selected === q.correctIndex ? (
+            <>
+              <strong>Correct!</strong> Great job.
+            </>
+          ) : (
+            <>
+              <strong>Incorrect.</strong> The correct answer is: <em>{q.choices[q.correctIndex]}</em>
+            </>
+          )}
+        </div>
+      )}
+
       <div className="choices" role="list" aria-label={`Choices (${q.choices.length})`}>
         <div className="choices-count">Choices: {q.choices.length}</div>
         {q.choices.map((c, i) => {
