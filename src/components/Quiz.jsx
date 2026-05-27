@@ -7,6 +7,7 @@ export default function Quiz({ questions, onFinish }) {
   const [score, setScore] = useState(0)
   const [showFeedback, setShowFeedback] = useState(false)
   const scoreRef = useRef(0)
+  const confettiFiredRef = useRef(false)
 
   const q = questions[index]
   const choiceRefs = useRef([])
@@ -23,11 +24,33 @@ export default function Quiz({ questions, onFinish }) {
         scoreRef.current = next
         return next
       })
-      confetti({ particleCount: 80, spread: 60, origin: { y: 0.2 } })
+      // Fire confetti once per correct selection
+      if (!confettiFiredRef.current) {
+        fireConfetti()
+        confettiFiredRef.current = true
+      }
     } else {
       // ensure ref stays in sync with state
       scoreRef.current = score
     }
+  }
+
+  function fireConfetti() {
+    // two bursts for a nicer effect
+    confetti({
+      particleCount: 60,
+      spread: 55,
+      origin: { y: 0.14 },
+      colors: ['#10b981', '#06b6d4', '#7dd3fc', '#fde68a']
+    })
+    setTimeout(() => {
+      confetti({
+        particleCount: 40,
+        spread: 80,
+        origin: { y: 0.2 },
+        colors: ['#10b981', '#06b6d4']
+      })
+    }, 250)
   }
 
   function next() {
@@ -53,6 +76,8 @@ export default function Quiz({ questions, onFinish }) {
       const el = choiceRefs.current[0]
       if (el && typeof el.focus === 'function') el.focus()
     }
+    // reset confetti marker when question changes
+    confettiFiredRef.current = false
   }, [index, showFeedback])
 
   return (
